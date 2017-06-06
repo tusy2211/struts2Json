@@ -1,0 +1,24 @@
+
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+	<!-- Dev Mode TRUE ; disable in production! -->
+	<constant name="struts.devMode" value="true" />
+
+	<package name="Banking" extends="struts-default">
+		<action name="getListAccount" class="com.struts2.khanhbn.Banking.controller.AccountController" method="processLogin">
+            <result name="success" type="json" >
+            	<param name="includeProperties">
+            		^data\[\d+\]\.id,
+				    ^data\[\d+\]\.username,
+				    ^data\[\d+\]\.password,
+				    ^data\[\d+\]\.description,
+				    ^data\[\d+\]\.image,
+				    ^data\[\d+\]\.birthday
+				</param>
+            </result>
+        </action>
+	</package>
+</struts>
