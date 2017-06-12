@@ -1,13 +1,12 @@
-
 <!DOCTYPE struts PUBLIC
-"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
-"http://struts.apache.org/dtds/struts-2.0.dtd">
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
 
 	<!-- Dev Mode TRUE ; disable in production! -->
-	<constant name="struts.devMode" value="true" />
 
-	<package name="Banking" extends="struts-default">
+	<package name="functionjson" namespace="/" extends="default,json-default">
+		<default-interceptor-ref name="securityStack"/>
 		<action name="getListAccount" class="com.struts2.khanhbn.Banking.controller.AccountController" method="processLogin">
             <result name="success" type="json" >
             	<param name="includeProperties">

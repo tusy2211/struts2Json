@@ -1,25 +1,60 @@
 package com.struts2.khanhbn.Banking.util;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.Session;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 public class HibernateUtil {
 
-	private static final SessionFactory sessionFactory;
-
+private static final ThreadLocal<Session> threadLocal = new ThreadLocal<Session>();
+    
+    private static org.hibernate.SessionFactory sessionFactory;
+    
     static {
-        try {
-            // Create the SessionFactory from standard (hibernate.cfg.xml) 
-            // config file.
-            sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
-        } catch (Throwable ex) {
-            // Log the exception. 
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
+        try{
+            
+            Configuration configuration=  new Configuration().configure("hibernate.cfg.xml");
+            StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder();
+            serviceRegistryBuilder.applySettings(configuration.getProperties());
+            ServiceRegistry serviceRegistry = serviceRegistryBuilder.build();
+            sessionFactory = configuration.buildSessionFactory(serviceRegistry);        
+            
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
-
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
+    
+    private HibernateUtil(){}
+    
+    public static Session getThreadLocalSession() {
+        Session session = (Session) threadLocal.get();
+         
+        if (session == null) {
+         session = sessionFactory.openSession();
+            threadLocal.set(session); 
+         }
+        
+        return session; 
+     }
+    
+    
+    public static void closeThreadLocalSession() {
+        
+        Session session = (Session) threadLocal.get();
+        threadLocal.set(null);
+        if (session != null) {
+        session.close();        
+        }
+    }
+    
+    public static Session getsession() {
+            return sessionFactory.openSession();
+    }
+    
+    public static void closeSession(Session session) {
+        if (session != null) {
+            session.close();
+        }
     }
 }

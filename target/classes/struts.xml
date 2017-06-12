@@ -1,4 +1,4 @@
-
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC
 "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
 "http://struts.apache.org/dtds/struts-2.0.dtd">
@@ -6,14 +6,31 @@
 
 	<!-- Dev Mode TRUE ; disable in production! -->
 	<constant name="struts.devMode" value="true" />
+	<constant name="struts.action.extension" value="html" />
 
-	<package name="Banking" extends="struts-default">
+	<package name="default" extends="struts-default">
 		<action name="login" class="com.struts2.khanhbn.Banking.controller.AccountController">
 			<result name="success">/login.jsp</result>
 		</action>
 		<action name="process-login" class="com.struts2.khanhbn.Banking.controller.AccountController" method="processLogin">
 			<result name="success">/index.jsp</result>
+			<result name="error">/login.jsp</result>
 		</action>
+		<action name="logout" class="com.struts2.khanhbn.Banking.controller.AccountController" method="logout">
+			<result name="success">/login.jsp</result>
+		</action>
+		<action name="getListAccount" class="com.struts2.khanhbn.Banking.controller.AccountController" method="processLogin">
+            <result name="success" type="json" >
+            	<param name="includeProperties">
+            		^data\[\d+\]\.id,
+				    ^data\[\d+\]\.username,
+				    ^data\[\d+\]\.password,
+				    ^data\[\d+\]\.description,
+				    ^data\[\d+\]\.image,
+				    ^data\[\d+\]\.birthday
+				</param>
+            </result>
+        </action>
 	</package>
-	<include file="json.xml"/>
+<!-- 	<include file="json.xml"/> -->
 </struts>

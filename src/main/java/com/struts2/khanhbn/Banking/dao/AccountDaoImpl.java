@@ -15,7 +15,7 @@ public class AccountDaoImpl implements AccountDao {
 	@Override
 	public List<Account> getAccounts() {
 		// TODO Auto-generated method stub
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = HibernateUtil.getsession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
@@ -37,7 +37,7 @@ public class AccountDaoImpl implements AccountDao {
 	@Override
 	public boolean login(String username, String password) {
 		// TODO Auto-generated method stub
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = HibernateUtil.getsession();
 		Transaction transaction = null;
 		transaction = session.beginTransaction();
 		String SQL_QUERY = " from Account ih where ih.username='" + username + "' and ih.password='" + password + "'";
@@ -56,7 +56,7 @@ public class AccountDaoImpl implements AccountDao {
 	@Override
 	public boolean addNew(Account account) {
 		// TODO Auto-generated method stub
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = HibernateUtil.getsession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
@@ -76,7 +76,7 @@ public class AccountDaoImpl implements AccountDao {
 	@Override
 	public Account getBookByID(int idAccount) {
 		// TODO Auto-generated method stub
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = HibernateUtil.getsession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
@@ -96,7 +96,7 @@ public class AccountDaoImpl implements AccountDao {
 	@Override
 	public boolean update(Account account) {
 		// TODO Auto-generated method stub
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = HibernateUtil.getsession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
