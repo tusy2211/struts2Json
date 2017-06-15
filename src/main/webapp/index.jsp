@@ -6,6 +6,16 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Struts Json  Datatable Demo</title>
+	<style>
+	#example_paginate {
+		float: inherit;
+	}
+	
+	#example_length {
+		float: right;
+		margin-top: 10px;
+	}
+	</style>
 	<link rel="stylesheet" href="bootstrap-3.3.6/css/bootstrap.css" />
 	<script src="bootstrap-3.3.6/js/jquery-2.2.3.min.js"></script>
 <%-- 	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script> --%>
@@ -28,11 +38,11 @@
 				alert("huhu");
 			});
 		});
-		
+		var rowData = null;
 		function createDataTableAccount(){
 			var oTable;
 			oTable = $('#example').DataTable({
-				"lengthMenu": [ 4, 15, 25, 50, 100],
+				"lengthMenu": [15, 25, 50, 100],
 			    "responsive": true,
 			    "destroy": true,
 			    "paginationType" : "full_numbers",
@@ -42,7 +52,7 @@
 			    "paging" :true,
 			    "bLengthChange": true,
 			    "bPaginate": true,
-			    "pageLength": 4,
+			    "pageLength": 15,
 			    "bSort" : true,
 			    "autoWidth": true,
 			    'columnDefs': [
@@ -78,11 +88,12 @@
 		              }}
 		            ],
 		            "fnInitComplete" : function(oSettings, json) {
-		            	$('.toolbar').append("<div style=\"padding-left:10px\"><input style=\"width:100px\" type=\"button\" value=\"AddUser\" id=\"btnAggiungi\" onclick=\"addEmployee();\"><input style=\"width:100px; margin-left:10px\" type=\"button\" value=\"Delete\" id=\"btnDelete\" onclick=\"deleteEmployee(${eId});\"><input id=\"btnModifica\" onclick=\"updateEmployee();\" style=\"width:100px; margin-left: 10px;\" disabled=\"disabled\" type=\"button\" value=\"Update\"></div>");
+		            	$('.toolbar').append("<div style=\"padding-left:10px\"><input style=\"width:100px\" type=\"button\" value=\"AddUser\" id=\"btnAggiungi\" onclick=\"addEmployee();\"><input style=\"width:100px; margin-left:10px\" type=\"button\" value=\"Delete\" id=\"btnDelete\" onclick=\"deleteEmployee();\"><input style=\"width:100px; margin-left:10px;\" type=\"button\" value=\"UpdateUser\" id=\"btnModifica\" onclick=\"updateEmployee();\"></div>");
 				    },
 			});
 			$('#example tbody').on( 'click', 'input[type="checkbox"]', function () {
 		        rowData = oTable.row($(this).parents('tr')).data();
+		        console.log("rowData===" + rowData);
 		    });
 		}
 		
@@ -94,23 +105,46 @@
 				_image: $('#image').val(),
 				_birthday: $('#birthday').val(),
 	        }).done(function(data) {	
-// 	        	alert('haha');
 	        	createDataTableAccount();
 	        	$('#detailModifica').modal('hide');
 		    }).fail(function() {
-		    	alert('huhu');
 	        	$('#detailModifica').modal('hide');
 		    });
 	 	}
 		
 		function addEmployee() {
-// 			$('#myModalLabelModifica').html('Aggiungi');
 			$('#username').val("");
 			$('#password').val("");
 			$('#description').val("");
 			$('#image').val("");
 			$('#birthday').val("");
 			$('#modificaButton').on('click', addUsers);
+			$('#detailModifica').modal('show');
+		}
+		
+		function updateUsers(){
+			$.post("saveUser.html", {
+				_id: rowData.id,
+				_username: $('#username').val(),
+				_pass: $('#password').val(),
+				_des: $('#description').val(),
+				_image: $('#image').val(),
+				_birthday: $('#birthday').val(),
+	        }).done(function(data) {	
+	        	createDataTableAccount();
+	        	$('#detailModifica').modal('hide');
+		    }).fail(function() {
+	        	$('#detailModifica').modal('hide');
+		    });
+	 	}
+		
+		function updateEmployee() {
+			$('#username').val(rowData.username);
+			$('#password').val(rowData.password);
+			$('#description').val(rowData.description);
+			$('#image').val(rowData.image);
+			$('#birthday').val(rowData.birthday);
+			$('#modificaButton').on('click', updateUsers);
 			$('#detailModifica').modal('show');
 		}
 		

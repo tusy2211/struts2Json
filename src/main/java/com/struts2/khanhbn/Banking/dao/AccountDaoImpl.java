@@ -61,7 +61,7 @@ public class AccountDaoImpl implements AccountDao {
 		try {
 			System.out.println("Dao=== " + account.getUsername());
 			transaction = session.beginTransaction();
-			session.save(account);
+			session.saveOrUpdate(account);
 			transaction.commit();
 			return true;
 		} catch (Exception e) {

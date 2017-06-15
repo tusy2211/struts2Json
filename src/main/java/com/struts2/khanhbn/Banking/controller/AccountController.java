@@ -29,6 +29,8 @@ public class AccountController extends ActionSupport implements SessionAware, Se
 	private List<Account> data = new ArrayList<Account>();
 	private AccountDaoImpl accountDao = new AccountDaoImpl();
 	private Account account = new Account();
+	
+	private int _id;
 
 	private String _username;
 
@@ -40,6 +42,14 @@ public class AccountController extends ActionSupport implements SessionAware, Se
 	
 	private Date _birthday;
 	
+	public int get_id() {
+		return _id;
+	}
+
+	public void set_id(int _id) {
+		this._id = _id;
+	}
+
 	public Date get_birthday() {
 		return _birthday;
 	}
@@ -177,6 +187,7 @@ public class AccountController extends ActionSupport implements SessionAware, Se
 
 	// process add
 	public String processAddNew() throws Exception {
+		account.setId(_id);
 		account.setUsername(_username);
 		account.setPassword(_pass);
 		account.setDescription(_des);
