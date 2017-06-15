@@ -8,6 +8,7 @@
 	<title>Struts Json  Datatable Demo</title>
 	<link rel="stylesheet" href="bootstrap-3.3.6/css/bootstrap.css" />
 	<script src="bootstrap-3.3.6/js/jquery-2.2.3.min.js"></script>
+<%-- 	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script> --%>
 	<script src="bootstrap-3.3.6/js/jquery-ui.js"></script>
 	<script src="bootstrap-3.3.6/js/jquery.popconfirm.js"></script>
 	<script src="bootstrap-3.3.6/js/bootstrap.min.js"></script>
@@ -15,11 +16,17 @@
 		src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 	<link rel="stylesheet"
 		href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
-	<script type="text/javascript"
-		src='<c:url value="/resources/lib/bootstrap-3.3.6/js/dataTables.checkboxes.min.js"/>'></script>
+<%-- 	<script type="text/javascript" --%>
+<%-- 		src="bootstrap-3.3.6/js/dataTables.checkboxes.min.js"></script> --%>
+	<script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.7/js/dataTables.checkboxes.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			createDataTableAccount();
+			$.post('getListAccount.html').done(function(data){
+				console.log(data);
+			}).fail(function(){
+				alert("huhu");
+			});
 		});
 		
 		function createDataTableAccount(){
@@ -29,8 +36,8 @@
 			    "responsive": true,
 			    "destroy": true,
 			    "paginationType" : "full_numbers",
-			    "processing" : false,
-			    "serverSide" : false,
+			    "processing" : true,
+			    "serverSide" : true,
 			    "bFilter": true,
 			    "paging" :true,
 			    "bLengthChange": true,
@@ -53,9 +60,9 @@
 	             "scrollY":        200,
 	             "scrollCollapse": true,
 	             "scroller":       true,
-	              "ajax" : {
-	 		         type: "POST",
-	 		     	 url: "getListAccount.action"
+	             "ajax" : {
+	 		         "type": "POST",
+	 		     	 "url": "getListAccount.html"
 	 		     },
 // 	             "dom" : '<"toolbar">frt' + "<'row'<'col-sm-8'p><'col-sm-4'l>>",
 	             "columns" : [
@@ -88,7 +95,7 @@
 	<table id="example">
 		<thead>
 			<tr>
-				<th>Account ID</th>
+				<th></th>
 				<th>Account Name</th>
 				<th>Account Pass</th>
 				<th>Description</th>

@@ -19,7 +19,7 @@ public class AccountDaoImpl implements AccountDao {
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			Query query = session.createQuery(" FROM Account a order by a.id asc");
+			Query query = session.createQuery(" FROM Account");
 			@SuppressWarnings("unchecked")
 			List<Account> lstAccounts = query.list();
 			transaction.commit();

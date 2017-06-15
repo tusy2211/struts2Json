@@ -1,5 +1,6 @@
 package com.struts2.khanhbn.Banking.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +25,7 @@ public class AccountController extends ActionSupport implements SessionAware, Se
 	private HttpServletRequest request;
 	private String username;
 	private String password;
-	private List<Account> lstAccounts;
+	private List<Account> data = new ArrayList<Account>();
 	private AccountDaoImpl accountDao = new AccountDaoImpl();
 
 	@Override
@@ -55,12 +56,12 @@ public class AccountController extends ActionSupport implements SessionAware, Se
 		this.password = password;
 	}
 
-	public List<Account> getLstAccounts() {
-		return lstAccounts;
+	public List<Account> getData() {
+		return data;
 	}
 
-	public void setLstAccounts(List<Account> lstAccounts) {
-		this.lstAccounts = lstAccounts;
+	public void setData(List<Account> data) {
+		this.data = data;
 	}
 
 	public AccountDao getAccountDao() {
@@ -98,6 +99,12 @@ public class AccountController extends ActionSupport implements SessionAware, Se
 		}
 		request.setAttribute("message", "Username or password is invalid!");
 		return ERROR;
+	}
+
+	public String getList() throws Exception {
+		this.data = accountDao.getAccounts();
+		System.out.println("aa==== " + data);
+		return SUCCESS;
 	}
 
 	// 3. Process logout.

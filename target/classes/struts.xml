@@ -19,18 +19,18 @@
 		<action name="logout" class="com.struts2.khanhbn.Banking.controller.AccountController" method="logout">
 			<result name="success">/login.jsp</result>
 		</action>
-		<action name="getListAccount" class="com.struts2.khanhbn.Banking.controller.AccountController" method="processLogin">
-            <result name="success" type="json" >
-            	<param name="includeProperties">
-            		^data\[\d+\]\.id,
-				    ^data\[\d+\]\.username,
-				    ^data\[\d+\]\.password,
-				    ^data\[\d+\]\.description,
-				    ^data\[\d+\]\.image,
-				    ^data\[\d+\]\.birthday
-				</param>
-            </result>
-        </action>
+<!-- 		<action name="getListAccount" class="com.struts2.khanhbn.Banking.controller.AccountController" method="processLogin"> -->
+<!--             <result name="success" type="json" > -->
+<!--             	<param name="includeProperties"> -->
+<!--             		^data\[\d+\]\.id, -->
+<!-- 				    ^data\[\d+\]\.username, -->
+<!-- 				    ^data\[\d+\]\.password, -->
+<!-- 				    ^data\[\d+\]\.description, -->
+<!-- 				    ^data\[\d+\]\.image, -->
+<!-- 				    ^data\[\d+\]\.birthday -->
+<!-- 				</param> -->
+<!--             </result> -->
+<!--         </action> -->
 	</package>
-<!-- 	<include file="json.xml"/> -->
+	<include file="json.xml"/>
 </struts>

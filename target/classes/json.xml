@@ -6,8 +6,7 @@
 	<!-- Dev Mode TRUE ; disable in production! -->
 
 	<package name="functionjson" namespace="/" extends="default,json-default">
-		<default-interceptor-ref name="securityStack"/>
-		<action name="getListAccount" class="com.struts2.khanhbn.Banking.controller.AccountController" method="processLogin">
+		<action name="getListAccount" class="com.struts2.khanhbn.Banking.controller.AccountController" method="getList">
             <result name="success" type="json" >
             	<param name="includeProperties">
             		^data\[\d+\]\.id,
