@@ -59,6 +59,7 @@ public class AccountDaoImpl implements AccountDao {
 		Session session = HibernateUtil.getsession();
 		Transaction transaction = null;
 		try {
+			System.out.println("Dao=== " + account.getUsername());
 			transaction = session.beginTransaction();
 			session.save(account);
 			transaction.commit();

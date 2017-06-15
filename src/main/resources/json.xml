@@ -18,5 +18,11 @@
 				</param>
             </result>
         </action>
+        
+        <action name="saveUser" class="com.struts2.khanhbn.Banking.controller.AccountController" method="processAddNew">
+            <result name="success" type="json" >
+            
+            </result>
+        </action>
 	</package>
 </struts>

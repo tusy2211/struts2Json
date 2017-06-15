@@ -36,13 +36,13 @@
 			    "responsive": true,
 			    "destroy": true,
 			    "paginationType" : "full_numbers",
-			    "processing" : true,
-			    "serverSide" : true,
+			    "processing" : false,
+			    "serverSide" : false,
 			    "bFilter": true,
 			    "paging" :true,
 			    "bLengthChange": true,
 			    "bPaginate": true,
-			    "pageLength": 15,
+			    "pageLength": 4,
 			    "bSort" : true,
 			    "autoWidth": true,
 			    'columnDefs': [
@@ -57,14 +57,14 @@
 	                'style': 'multi'
 	             },
 	             'order': [[1, 'asc']],
-	             "scrollY":        200,
-	             "scrollCollapse": true,
-	             "scroller":       true,
+// 	             "scrollY":        200,
+// 	             "scrollCollapse": true,
+// 	             "scroller":       true,
 	             "ajax" : {
 	 		         "type": "POST",
 	 		     	 "url": "getListAccount.html"
 	 		     },
-// 	             "dom" : '<"toolbar">frt' + "<'row'<'col-sm-8'p><'col-sm-4'l>>",
+	             "dom" : '<"toolbar">frt' + "<'row'<'col-sm-8'p><'col-sm-4'l>>",
 	             "columns" : [
 	            	  {"mData":"id"},
 		              {"mData":"username"},
@@ -76,15 +76,46 @@
 		                  var month = date.getMonth() + 1;
 		                  return (month.length > 1 ? month : month) + "/" + date.getDate() + "/" + date.getFullYear();
 		              }}
-		            ]
-// 		            "fnInitComplete" : function(oSettings, json) {
-// 		            	$('.toolbar').append("<div style=\"padding-left:10px\"><input style=\"width:100px\" type=\"button\" value=\"AddEmp\" id=\"btnAggiungi\" onclick=\"addEmployee();\"><input style=\"width:100px; margin-left:10px\" type=\"button\" value=\"Delete\" id=\"btnDelete\" onclick=\"deleteEmployee(${eId});\"><input id=\"btnModifica\" onclick=\"updateEmployee();\" style=\"width:100px; margin-left: 10px;\" disabled=\"disabled\" type=\"button\" value=\"Update\"></div>");
-// 		            	showInputTest();
-// 				    },
+		            ],
+		            "fnInitComplete" : function(oSettings, json) {
+		            	$('.toolbar').append("<div style=\"padding-left:10px\"><input style=\"width:100px\" type=\"button\" value=\"AddUser\" id=\"btnAggiungi\" onclick=\"addEmployee();\"><input style=\"width:100px; margin-left:10px\" type=\"button\" value=\"Delete\" id=\"btnDelete\" onclick=\"deleteEmployee(${eId});\"><input id=\"btnModifica\" onclick=\"updateEmployee();\" style=\"width:100px; margin-left: 10px;\" disabled=\"disabled\" type=\"button\" value=\"Update\"></div>");
+				    },
 			});
 			$('#example tbody').on( 'click', 'input[type="checkbox"]', function () {
 		        rowData = oTable.row($(this).parents('tr')).data();
 		    });
+		}
+		
+		function addUsers(){
+			$.post("saveUser.html", {
+				_username: $('#username').val(),
+				_pass: $('#password').val(),
+				_des: $('#description').val(),
+				_image: $('#image').val(),
+				_birthday: $('#birthday').val(),
+	        }).done(function(data) {	
+// 	        	alert('haha');
+	        	createDataTableAccount();
+	        	$('#detailModifica').modal('hide');
+		    }).fail(function() {
+		    	alert('huhu');
+	        	$('#detailModifica').modal('hide');
+		    });
+	 	}
+		
+		function addEmployee() {
+// 			$('#myModalLabelModifica').html('Aggiungi');
+			$('#username').val("");
+			$('#password').val("");
+			$('#description').val("");
+			$('#image').val("");
+			$('#birthday').val("");
+			$('#modificaButton').on('click', addUsers);
+			$('#detailModifica').modal('show');
+		}
+		
+		function onClickChiudi_modifica() {
+			$('#detailModifica').modal('hide');
 		}
 	</script>
 </head>
@@ -104,5 +135,80 @@
 			</tr>
 		</thead>
 	</table>
+	
+	<!--  ========================== Modifica======================= -->
+		<div aria-hidden="true" aria-labelledby="detailModifica" role="dialog"
+			tabindex="-1" id="detailModifica" class="modal fade"
+			style="display: none;">
+			<div class="modal-dialog">
+
+				<div class="modal-content">
+					<div class="modal-header">
+						<button aria-hidden="true" data-dismiss="modal" class="close"
+							type="button">×</button>
+						<h4 id="myModalLabelModifica" class="modal-title">Modifica</h4>
+					</div>
+					<div class="modal-body">
+						<!-- <div class="col-lg-12" style="text-align: left;"> -->
+
+						<div class="panel-body" style="border: 0px;">
+							<div class="dataTable_wrapper">
+								<div id="dati_form_modifica">
+									<div class="row">
+
+										<fieldset id="modificaAggiungi">
+											
+											<div class="row" style="text-align: left;">
+												<div class="col-lg-4 col-md-4 col-sm-4"
+													style="margin-right: 100px; margin-left: 50px;">
+													<b>Name: </b><br />
+												    <input type="text" id="username" name="username" class="form-control"></input>
+												</div>
+												<div class="col-lg-4 col-md-4 col-sm-4"
+													style="margin-right: 100px; margin-left: 50px;">
+													<b>Password: </b><br />
+												    <input type="password" id="password" name="password" class="form-control"></input>
+												</div>
+												<div class="col-lg-4 col-md-4 col-sm-4"
+													style="margin-right: 100px; margin-left: 50px;">
+													<b>Description: </b><br />
+												    <input type="text" id="description" name="description" class="form-control"></input>
+												</div>
+												<div class="col-lg-4 col-md-4 col-sm-4"
+													style="margin-right: 100px; margin-left: 50px;" class="form-control">
+													<b>Image: </b><br />
+												    <input type="text" id="image" name="image" class="form-control"></input>
+												</div>
+												<div class="col-lg-4 col-md-4 col-sm-4"
+													style="margin-right: 100px; margin-left: 50px;">
+													<b>Birthday: </b><br />
+												    <input type="text" id="birthday" name="birthday" class="form-control"></input>
+												</div>
+
+											</div>
+											<br/>
+										</fieldset>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- </div> -->						
+					</div>
+					<div class="modal-footer" style="border: 0px;">
+							<div style="padding-left: 0px;">
+								<div class="tr-dettaglio" style="margin-top: 5px;">
+									<button id="modificaButton" onclick=""
+										style="margin-right:0px; float: right;">Modifica</button>
+								</div>
+								<button id="callAnnullaModificaButton" onclick="onClickChiudi_modifica()" type="button" style="float: left;">Cancel</button>
+							</div>
+						</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+			<!-- /.modal -->
+		</div>
+		<!--  ==========================End Modifica ======================= -->
 </body>
 </html>

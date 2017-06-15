@@ -1,6 +1,7 @@
 package com.struts2.khanhbn.Banking.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,65 @@ public class AccountController extends ActionSupport implements SessionAware, Se
 	private String password;
 	private List<Account> data = new ArrayList<Account>();
 	private AccountDaoImpl accountDao = new AccountDaoImpl();
+	private Account account = new Account();
+
+	private String _username;
+
+	private String _pass;
+
+	private String _des;
+
+	private String _image;
+	
+	private Date _birthday;
+	
+	public Date get_birthday() {
+		return _birthday;
+	}
+
+	public void set_birthday(Date _birthday) {
+		this._birthday = _birthday;
+	}
+
+	public String get_username() {
+		return _username;
+	}
+
+	public void set_username(String _username) {
+		this._username = _username;
+	}
+
+	public String get_pass() {
+		return _pass;
+	}
+
+	public void set_pass(String _pass) {
+		this._pass = _pass;
+	}
+
+	public String get_des() {
+		return _des;
+	}
+
+	public void set_des(String _des) {
+		this._des = _des;
+	}
+
+	public String get_image() {
+		return _image;
+	}
+
+	public void set_image(String _image) {
+		this._image = _image;
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
 
 	@Override
 	public void setServletRequest(HttpServletRequest request) {
@@ -115,4 +175,19 @@ public class AccountController extends ActionSupport implements SessionAware, Se
 		return SUCCESS;
 	}
 
+	// process add
+	public String processAddNew() throws Exception {
+		account.setUsername(_username);
+		account.setPassword(_pass);
+		account.setDescription(_des);
+		account.setImage(_image);
+		account.setBirthday(_birthday);
+		System.out.println("bbb====" + account.getUsername());
+		boolean isCheck = accountDao.addNew(account);
+		System.out.println("bbb====" + account);
+		if (isCheck) {
+			this.data = accountDao.getAccounts();
+		}
+		return SUCCESS;
+	}
 }
