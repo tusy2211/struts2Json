@@ -59,7 +59,6 @@ public class AccountDaoImpl implements AccountDao {
 		Session session = HibernateUtil.getsession();
 		Transaction transaction = null;
 		try {
-			System.out.println("Dao=== " + account.getUsername());
 			transaction = session.beginTransaction();
 			session.saveOrUpdate(account);
 			transaction.commit();
@@ -117,6 +116,20 @@ public class AccountDaoImpl implements AccountDao {
 	@Override
 	public boolean delete(Account account) {
 		// TODO Auto-generated method stub
+		Session session = HibernateUtil.getsession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			session.delete(account);
+			transaction.commit();
+			return true;
+		} catch (Exception e) {
+			if (!(transaction == null)) {
+				transaction.rollback();
+			}
+		} finally {
+			session.close();
+		}
 		return false;
 	}
 

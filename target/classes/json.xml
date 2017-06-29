@@ -24,5 +24,11 @@
             
             </result>
         </action>
+        
+        <action name="delUser" class="com.struts2.khanhbn.Banking.controller.AccountController" method="delete">
+            <result name="success" type="json" >
+            
+            </result>
+        </action>
 	</package>
 </struts>
